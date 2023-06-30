@@ -3,7 +3,7 @@ class Api::V1::AssignmentsController < ApplicationController
 
   # GET /api/v1/assignments
   def index
-    @assignments = Assignment.all
+    @assignments = Api::V1::Assignment.all
     render json: @assignments
   end
 
@@ -14,7 +14,7 @@ class Api::V1::AssignmentsController < ApplicationController
 
   # POST /api/v1/assignments
   def create
-    @assignment = Assignment.new(assignment_params)
+    @assignment = Api::V1::Assignment.new(assignment_params)
 
     if @assignment.save
       render json: @assignment, status: :created
@@ -41,7 +41,7 @@ class Api::V1::AssignmentsController < ApplicationController
   private
 
   def set_assignment
-    @assignment = Assignment.find(params[:id])
+    @assignment = Api::V1::Assignment.find(params[:id])
   end
 
   def assignment_params
