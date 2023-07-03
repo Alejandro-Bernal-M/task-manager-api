@@ -4,6 +4,7 @@ class CreateApiV1Tasks < ActiveRecord::Migration[7.0]
       t.string :title
       t.string :content
       t.integer :author_id
+      t.string :status
 
       t.timestamps
     end
