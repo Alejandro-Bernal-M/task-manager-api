@@ -23,9 +23,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_105621) do
     t.index ["user_id"], name: "index_api_v1_assignments_on_user_id"
   end
 
-  create_table "api_v1_group_tables", force: :cascade do |t|
+  create_table "api_v1_groups", force: :cascade do |t|
     t.string "title"
     t.integer "author"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -57,6 +58,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_105621) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "api_v1_group_tables", "api_v1_users", column: "author"
+  add_foreign_key "api_v1_groups", "api_v1_users", column: "author"
   add_foreign_key "api_v1_tasks", "api_v1_users", column: "author_id"
 end
