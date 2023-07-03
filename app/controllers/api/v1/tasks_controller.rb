@@ -16,7 +16,6 @@ class Api::V1::TasksController < ApplicationController
   # POST /api/v1/tasks
   def create
     @api_v1_task = Api::V1::Task.new(api_v1_task_params)
-    @api_v1_task.author = Api::V1::User.find(params[:author_id])
 
     if @api_v1_task.save
       render json: @api_v1_task, status: :created, location: @api_v1_task
@@ -48,6 +47,6 @@ class Api::V1::TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def api_v1_task_params
-      params.require(:api_v1_task).permit(:title, :content, :status)
+      params.require(:api_v1_task).permit(:title, :content, :status, :author_id)
     end
 end

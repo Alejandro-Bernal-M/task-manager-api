@@ -45,6 +45,6 @@ class Api::V1::AssignmentsController < ApplicationController
   end
 
   def assignment_params
-    params.require(:assignment).permit(:user_id, :task_id)
+    params.require(:assignment).permit(:api_v1_user_id, :api_v1_task_id)
   end
 end
