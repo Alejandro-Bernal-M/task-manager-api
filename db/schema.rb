@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_03_105621) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_03_113811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_105621) do
     t.string "title"
     t.integer "author_id"
     t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "api_v1_subgroups", force: :cascade do |t|
+    t.string "title"
+    t.integer "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -59,5 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_105621) do
   end
 
   add_foreign_key "api_v1_groups", "api_v1_users", column: "author_id"
+  add_foreign_key "api_v1_subgroups", "api_v1_groups", column: "group_id"
   add_foreign_key "api_v1_tasks", "api_v1_users", column: "author_id"
 end
