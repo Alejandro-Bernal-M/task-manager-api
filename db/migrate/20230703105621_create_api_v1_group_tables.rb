@@ -3,6 +3,7 @@ class CreateApiV1GroupTables < ActiveRecord::Migration[7.0]
     create_table :api_v1_group_tables do |t|
       t.string :title
       t.integer :author
+      t.string :description
 
       t.timestamps
     end
