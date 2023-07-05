@@ -8,4 +8,6 @@ class Api::V1::User < ApplicationRecord
   has_many :api_v1_tasks, through: :api_v1_assignments, source: :task
   has_many :api_v1_authored_tasks, class_name: 'Api::V1::Task', foreign_key: 'author_id', dependent: :destroy
   has_many :api_v1_groups, foreign_key: 'author_id', dependent: :destroy
+  has_many :api_v1_usergroups, dependent: :destroy
+  has_many :api_v1_subgroups, through: :api_v1_usergroups, source: :subgroup
 end
