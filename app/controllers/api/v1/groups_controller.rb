@@ -1,9 +1,9 @@
 class Api::V1::GroupController < ApplicationController
   before_action :set_api_v1_group, only: %i[ show update destroy ]
 
-  # GET /api/v1/groups
+  # GET /api/v1/users/:user_id/groups
   def index
-    @api_v1_groups = Api::V1::Group.all
+    @api_v1_groups = Api::V1::Group.where(author_id: params[:user_id])
 
     render json: @api_v1_groups
   end

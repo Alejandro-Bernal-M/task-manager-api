@@ -1,9 +1,9 @@
 class Api::V1::TasksController < ApplicationController
   before_action :set_api_v1_task, only: %i[ show update destroy ]
 
-  # GET /api/v1/tasks
+  # GET /api/v1/users/:user_id/tasks
   def index
-    @api_v1_tasks = Api::V1::Task.all
+    @api_v1_tasks = Api::V1::Task.where(author_id: params[:user_id])
 
     render json: @api_v1_tasks
   end

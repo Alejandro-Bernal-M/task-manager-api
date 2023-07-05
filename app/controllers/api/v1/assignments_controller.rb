@@ -1,18 +1,19 @@
 class Api::V1::AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :update, :destroy]
 
-  # GET /api/v1/assignments
+  # GET /api/v1/users/:user_id/assignments
   def index
-    @assignments = Api::V1::Assignment.all
+    @assignments = Api::V1::Assignment.where(api_v1_user_id: params[:user_id])
+
     render json: @assignments
   end
 
-  # GET /api/v1/assignments/:id
+  # GET /api/v1/users/:user_id/tasks/:task_id/assignments/:id
   def show
     render json: @assignment
   end
 
-  # POST /api/v1/assignments
+  # POST /api/v1/users/:user_id/tasks/:task_id/assignments
   def create
     @assignment = Api::V1::Assignment.new(assignment_params)
 
@@ -23,7 +24,7 @@ class Api::V1::AssignmentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /api/v1/assignments/:id
+  # PATCH/PUT /api/v1/users/:user_id/tasks/:task_id/assignments/:id
   def update
     if @assignment.update(assignment_params)
       render json: @assignment
@@ -32,7 +33,7 @@ class Api::V1::AssignmentsController < ApplicationController
     end
   end
 
-  # DELETE /api/v1/assignments/:id
+  # DELETE /api/v1/users/:user_id/tasks/:task_id/assignments/:id
   def destroy
     @assignment.destroy
     head :no_content
