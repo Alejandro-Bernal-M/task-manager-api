@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
-  before_action :uptade_allowed_parameters, if: :devise_controller?
+  # before_action :uptade_allowed_parameters
+  # before_action :authenticate_user!
 
   def update_allowed_parameters
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :password) }

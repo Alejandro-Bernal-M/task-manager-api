@@ -1,6 +1,6 @@
 class CreateApiV1Tasks < ActiveRecord::Migration[7.0]
   def change
-    create_table :api_v1_tasks do |t|
+    create_table :tasks do |t|
       t.string :title
       t.string :content
       t.integer :author_id
@@ -9,13 +9,13 @@ class CreateApiV1Tasks < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    create_table :api_v1_assignments do |t|
-      t.belongs_to :api_v1_user, index: true
-      t.belongs_to :api_v1_task, index: true
+    create_table :assignments do |t|
+      t.belongs_to :user, index: true
+      t.belongs_to :task, index: true
 
       t.timestamps
     end
 
-    add_foreign_key :api_v1_tasks, :api_v1_users, column: :author_id
+    add_foreign_key :tasks, :users, column: :author_id
   end
 end

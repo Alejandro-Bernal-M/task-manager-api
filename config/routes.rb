@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, class: "Api::V1::User"
-
+  
   namespace :api do
     namespace :v1 do
+      resources :sessions, only: [:create, :destroy]
       resources :users do
         resources :tasks
         resources :assignments

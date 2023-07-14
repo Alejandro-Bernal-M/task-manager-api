@@ -14,16 +14,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_114606) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "api_v1_assignments", force: :cascade do |t|
-    t.bigint "api_v1_user_id"
-    t.bigint "api_v1_task_id"
+  create_table "assignments", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["api_v1_task_id"], name: "index_api_v1_assignments_on_api_v1_task_id"
-    t.index ["api_v1_user_id"], name: "index_api_v1_assignments_on_api_v1_user_id"
+    t.index ["task_id"], name: "index_assignments_on_task_id"
+    t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
-  create_table "api_v1_groups", force: :cascade do |t|
+  create_table "groups", force: :cascade do |t|
     t.string "title"
     t.integer "author_id"
     t.string "description"
@@ -31,14 +31,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_114606) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "api_v1_subgroups", force: :cascade do |t|
+  create_table "subgroups", force: :cascade do |t|
     t.string "title"
     t.integer "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "api_v1_tasks", force: :cascade do |t|
+  create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.string "content"
     t.integer "author_id"
@@ -47,16 +47,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_114606) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "api_v1_usergroups", force: :cascade do |t|
-    t.bigint "api_v1_user_id"
-    t.bigint "api_v1_subgroup_id"
+  create_table "usergroups", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "subgroup_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["api_v1_subgroup_id"], name: "index_api_v1_usergroups_on_api_v1_subgroup_id"
-    t.index ["api_v1_user_id"], name: "index_api_v1_usergroups_on_api_v1_user_id"
+    t.index ["subgroup_id"], name: "index_usergroups_on_subgroup_id"
+    t.index ["user_id"], name: "index_usergroups_on_user_id"
   end
 
-  create_table "api_v1_users", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -65,11 +65,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_114606) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.index ["email"], name: "index_api_v1_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_api_v1_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "api_v1_groups", "api_v1_users", column: "author_id"
-  add_foreign_key "api_v1_subgroups", "api_v1_groups", column: "group_id"
-  add_foreign_key "api_v1_tasks", "api_v1_users", column: "author_id"
+  add_foreign_key "groups", "users", column: "author_id"
+  add_foreign_key "subgroups", "groups"
+  add_foreign_key "tasks", "users", column: "author_id"
 end
