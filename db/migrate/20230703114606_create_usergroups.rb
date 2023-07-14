@@ -1,4 +1,4 @@
-class CreateApiV1Usergroups < ActiveRecord::Migration[7.0]
+class CreateUsergroups < ActiveRecord::Migration[7.0]
   def change
     create_table :usergroups do |t|
       t.belongs_to :user, index: true

@@ -1,4 +1,4 @@
-class CreateApiV1Subgroups < ActiveRecord::Migration[7.0]
+class CreateSubgroups < ActiveRecord::Migration[7.0]
   def change
     create_table :subgroups do |t|
       t.string :title
