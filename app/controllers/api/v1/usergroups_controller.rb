@@ -3,7 +3,7 @@ class Api::V1::UsergroupsController < ApplicationController
 
   # GET /api/v1/groups/:group_id/subgroups/:subgroup_id/usergroups
   def index
-    @usergroups = Api::V1::Usergroup.where(subgroup_id: params[:subgroup_id])
+    @usergroups = Usergroup.where(subgroup_id: params[:subgroup_id])
 
     render json: @usergroups
   end
@@ -16,7 +16,7 @@ class Api::V1::UsergroupsController < ApplicationController
 
   # POST /api/v1/groups/:group_id/subgroups/:subgroup_id/usergroups
   def create
-    @usergroup = Api::V1::Usergroup.new(usergroup_params)
+    @usergroup = Usergroup.new(usergroup_params)
 
     if @usergroup.save
       render json: @usergroup, status: :created, location: @usergroup
@@ -44,11 +44,11 @@ class Api::V1::UsergroupsController < ApplicationController
   private
 
   def set_assignment
-    @usergroup = Api::V1::Usergroup.find(params[:id])
+    @usergroup = Usergroup.find(params[:id])
   end
 
   def usergroup_params
-    params.require(:usergroup).permit(:api_v1_user_id, :api_v1_subgroup_id)
+    params.require(:usergroup).permit(:user_id, :subgroup_id)
   end
 
 end

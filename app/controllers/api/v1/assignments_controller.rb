@@ -3,7 +3,7 @@ class Api::V1::AssignmentsController < ApplicationController
 
   # GET /api/v1/users/:user_id/assignments
   def index
-    @assignments = Api::V1::Assignment.where(api_v1_user_id: params[:user_id])
+    @assignments = Assignment.where(user_id: params[:user_id])
 
     render json: @assignments
   end
@@ -15,7 +15,7 @@ class Api::V1::AssignmentsController < ApplicationController
 
   # POST /api/v1/users/:user_id/tasks/:task_id/assignments
   def create
-    @assignment = Api::V1::Assignment.new(assignment_params)
+    @assignment = Assignment.new(assignment_params)
 
     if @assignment.save
       render json: @assignment, status: :created
@@ -42,10 +42,10 @@ class Api::V1::AssignmentsController < ApplicationController
   private
 
   def set_assignment
-    @assignment = Api::V1::Assignment.find(params[:id])
+    @assignment = Assignment.find(params[:id])
   end
 
   def assignment_params
-    params.require(:assignment).permit(:api_v1_user_id, :api_v1_task_id)
+    params.require(:assignment).permit(:user_id, :task_id)
   end
 end
