@@ -1,10 +1,15 @@
 class ApplicationController < ActionController::API
-  # before_action :uptade_allowed_parameters
-  # before_action :authenticate_user!
+  before_action :authenticate_request
 
-  def update_allowed_parameters
-    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :password) }
-    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :email, :password, :current_password) }
+  private
+
+  def authenticate_request
+    token = request.headers['Authorization'].split(' ').last
+    begin
+      payload = JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
+      @current_user = User.find(payload.first['user_id'])
+    rescue JWT::DecodeError, ActiveRecord::RecordNotFound
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
   end
-
 end
