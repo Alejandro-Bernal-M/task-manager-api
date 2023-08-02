@@ -8,7 +8,7 @@ class Api::V1::AuthenticationsController < ApplicationController
       token = JWT.encode({user_id: user.id, exp: expiration_time }, Rails.application.secrets.secret_key_base, 'HS256')
       render json: {status: 'Sucess', token: token}
     else
-      render json: {error: 'Invalid username or password'}
+      render json: {status: 'Error', message: 'Invalid username or password'}
     end
   end
 end
