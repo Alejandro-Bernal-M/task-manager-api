@@ -3,7 +3,7 @@ class Api::V1::TasksController < ApplicationController
 
   # GET /api/v1/users/:user_id/tasks
   def index
-    @tasks = Task.where(author_id: params[:user_id])
+    @tasks = Task.where(author_id: params[:user_id]).order(:order)
 
     render json: @tasks
   end
@@ -36,6 +36,7 @@ class Api::V1::TasksController < ApplicationController
   # DELETE /api/v1/tasks/1
   def destroy
     @task.destroy
+    render json: {message: 'Task deleted'}
   end
 
   private
@@ -44,9 +45,8 @@ class Api::V1::TasksController < ApplicationController
       @task = Task.find(params[:id])
     end
 
-
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :description, :status, :author_id)
+      params.require(:task).permit(:title, :description, :status, :author_id, :order)
     end
 end
