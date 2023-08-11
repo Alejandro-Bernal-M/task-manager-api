@@ -18,6 +18,7 @@ class Api::V1::TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
+      @task.update(order: @task.id)
       render json: @task, status: :created
     else
       render json: @task.errors, status: :unprocessable_entity
