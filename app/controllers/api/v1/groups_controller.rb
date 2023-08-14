@@ -1,11 +1,11 @@
-class Api::V1::GroupController < ApplicationController
+class Api::V1::GroupsController < ApplicationController
   before_action :set_group, only: %i[ show update destroy ]
 
   # GET /api/v1/users/:user_id/groups
   def index
     @groups = Group.where(author_id: params[:user_id])
 
-    render json: @groups
+    render json: {status: 'SUCCESS', data: @groups}
   end
 
   # GET /api/v1/groups/1
@@ -18,7 +18,7 @@ class Api::V1::GroupController < ApplicationController
     @group = Group.new(group_params)
 
     if @group.save
-      render json: @group, status: :created, location: @group
+      render json: @group, status: :created
     else
       render json: @group.errors, status: :unprocessable_entity
     end
