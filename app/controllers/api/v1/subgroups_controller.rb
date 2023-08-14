@@ -1,4 +1,4 @@
-class Api::V1::SubgroupController < ApplicationController
+class Api::V1::SubgroupsController < ApplicationController
   before_action :set_subgroup, only: [:show, :update, :destroy]
 
   # GET /api/v1/:user_id/groups/:group_id/subgroups
