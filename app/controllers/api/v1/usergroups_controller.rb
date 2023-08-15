@@ -1,20 +1,21 @@
 class Api::V1::UsergroupsController < ApplicationController
   before_action :set_usergroup, only: [:show, :update, :destroy]
 
-  # GET /api/v1/groups/:group_id/subgroups/:subgroup_id/usergroups
+  # GET /api/v1/users/:user_id/usergroups
   def index
-    @usergroups = Usergroup.where(subgroup_id: params[:subgroup_id])
+    @usergroups = Usergroup.where(user_id: params[:user_id])
+    @subgroups = @usergroups.map { |usergroup| Subgroup.find(usergroup.subgroup_id) }
 
-    render json: @usergroups
+    render json: {data: @subgroups, status: 'SUCCESS'}
   end
 
 
-  # GET /api/v1/groups/:group_id/subgroups/:subgroup_id/usergroups/1
+  # GET /api/v1/users/:user_id/usergroups/:id
   def show
     render json: @usergroup
   end
 
-  # POST /api/v1/groups/:group_id/subgroups/:subgroup_id/usergroups
+  # POST /api/v1/users/:user_id/usergroups/:id
   def create
     @usergroup = Usergroup.new(usergroup_params)
 
@@ -25,7 +26,7 @@ class Api::V1::UsergroupsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /api/v1/groups/:group_id/subgroups/:subgroup_id/usergroups/1
+  # PATCH/PUT /api/v1/users/:user_id/usergroups/:id
   def update
     if @usergroup.update(usergroup_params)
       render json: @usergroup
@@ -35,7 +36,7 @@ class Api::V1::UsergroupsController < ApplicationController
   end
  
 
-  # DELETE /api/v1/groups/:group_id/subgroups/:subgroup_id/usergroups/1
+  # DELETE /api/v1/users/:user_id/usergroups/:id
   def destroy
     @usergroup.destroy
 
