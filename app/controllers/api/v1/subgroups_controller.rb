@@ -18,7 +18,7 @@ class Api::V1::SubgroupsController < ApplicationController
     @subgroup = Subgroup.new(subgroup_params)
 
     if @subgroup.save
-      render json: @subgroup, status: :created, location: @subgroup
+      render json:{ data: @subgroup, status: 'SUCCESS'}
     else
       render json: @subgroup.errors, status: :unprocessable_entity
     end
@@ -35,7 +35,11 @@ class Api::V1::SubgroupsController < ApplicationController
 
   # DELETE /api/v1/:user_id/groups/:group_id/subgroups/1
   def destroy
-    @subgroup.destroy
+    if @subgroup.destroy
+      render json: { data: @subgroup, status: 'SUCCESS', message: 'Subgroup was successfully deleted.'}
+    else
+      render json: @subgroup.errors, status: :unprocessable_entity
+    end
   end
 
   private

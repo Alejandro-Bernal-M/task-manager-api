@@ -3,4 +3,8 @@ class Subgroup < ApplicationRecord
 
   has_many :usergroups, dependent: :destroy
   has_many :users, through: :usergroups, source: :user
+
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :group_id, presence: true
+  validates :description, presence: true, length: { maximum: 255 }
 end
