@@ -10,8 +10,8 @@ Rails.application.routes.draw do
         resources :groups do
           resources :subgroups
         end
+        resources :invitations, only: [:create, :update, :destroy, :index ]
       end
-      resources :invitations, only: [:create, :update, :destroy, :index ]
     end
   end
 
