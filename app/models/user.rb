@@ -8,4 +8,5 @@ class User < ApplicationRecord
   has_many :groups, foreign_key: 'author_id', dependent: :destroy
   has_many :usergroups, dependent: :destroy
   has_many :subgroups, through: :usergroups, source: :subgroup
+  has_many :invitations, dependent: :destroy
 end
