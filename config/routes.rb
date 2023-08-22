@@ -11,6 +11,7 @@ Rails.application.routes.draw do
           resources :subgroups
         end
       end
+      resources :invitations, only: [:create, :update, :destroy, :index ]
     end
   end
 
