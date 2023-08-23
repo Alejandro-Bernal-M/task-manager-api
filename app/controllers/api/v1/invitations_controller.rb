@@ -8,7 +8,8 @@ class Api::V1::InvitationsController < ApplicationController
       data = {
         subgroup: Subgroup.find(invitation.subgroup_id).title,
         invited: {name: User.find(invitation.user_id).name, email: User.find(invitation.user_id).email},
-        date: invitation.created_at
+        date: invitation.created_at,
+        status: invitation.status
       }
       data
     end
@@ -16,7 +17,8 @@ class Api::V1::InvitationsController < ApplicationController
       data = {
         subgroup: Subgroup.find(invitation.subgroup_id).title,
         invited_by: {name: User.find(invitation.author_id).name, email: User.find(invitation.author_id).email}, 
-        date: invitation.created_at
+        date: invitation.created_at,
+        status: invitation.status
       }
       data
     end
