@@ -3,6 +3,15 @@ class Api::V1::InvitationsController < ApplicationController
 
   def index
     @invitations = Invitation.includes(:author, :subgroup).where(user_id: params[:user_id])
+    @invitations_send_by_you = Invitation.includes(:author, :subgroup).where(author_id: params[:user_id])
+    @filtered_invitations_send_by_you = @invitations_send_by_you.map  do |invitation|
+      data = {
+        subgroup: Subgroup.find(invitation.subgroup_id).title,
+        invited: {name: User.find(invitation.user_id).name, email: User.find(invitation.user_id).email},
+        date: invitation.created_at
+      }
+      data
+    end
     @filtered_invitations = @invitations.map  do |invitation| 
       data = {
         subgroup: Subgroup.find(invitation.subgroup_id).title,
@@ -11,7 +20,7 @@ class Api::V1::InvitationsController < ApplicationController
       }
       data
     end
-    render json: {data: @filtered_invitations , status: 'SUCCESS'}
+    render json: {data: {received: @filtered_invitations, send: @filtered_invitations_send_by_you}  , status: 'SUCCESS'}
   end
 
   def show

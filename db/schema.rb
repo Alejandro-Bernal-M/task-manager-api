@@ -25,7 +25,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_201730) do
 
   create_table "groups", force: :cascade do |t|
     t.string "title"
-    t.string "email"
     t.integer "author_id"
     t.string "description"
     t.datetime "created_at", null: false
