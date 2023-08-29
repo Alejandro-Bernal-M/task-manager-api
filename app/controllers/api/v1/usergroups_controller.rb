@@ -19,10 +19,12 @@ class Api::V1::UsergroupsController < ApplicationController
   def create
     @usergroup = Usergroup.new(usergroup_params)
 
-    if @usergroup.save
-      render json: @usergroup, status: :created, location: @usergroup
+    if Usergroup.exists?(user_id: @usergroup.user_id, subgroup_id: @usergroup.subgroup_id)
+      render json: { status: 'ERROR', message: 'Assignation already exists' }
+    elsif @usergroup.save
+      render json:{ data: @usergroup, status: 'SUCCESS', message: 'Assigned to the group'}
     else
-      render json: @usergroup.errors, status: :unprocessable_entity
+      render json: { data: @usergroup.errors, status: 'ERROR', message: 'Not assigned to the group'}
     end
   end
 
