@@ -7,7 +7,8 @@ class Api::V1::InvitationsController < ApplicationController
     @filtered_invitations_send_by_you = @invitations_send_by_you.map  do |invitation|
       data = {
         subgroup: Subgroup.find(invitation.subgroup_id).title,
-        invited: {name: User.find(invitation.user_id).name, email: User.find(invitation.user_id).email},
+        subgroup_id: invitation.subgroup_id,
+        invited: {name: User.find(invitation.user_id).name, email: User.find(invitation.user_id).email, id:invitation.user_id },
         date: invitation.created_at,
         status: invitation.status,
         id: invitation.id
@@ -17,7 +18,8 @@ class Api::V1::InvitationsController < ApplicationController
     @filtered_invitations = @invitations.map  do |invitation| 
       data = {
         subgroup: Subgroup.find(invitation.subgroup_id).title,
-        invited_by: {name: User.find(invitation.author_id).name, email: User.find(invitation.author_id).email}, 
+        subgroup_id: invitation.subgroup_id,
+        invited_by: {name: User.find(invitation.author_id).name, email: User.find(invitation.author_id).email, id:invitation.user_id }, 
         date: invitation.created_at,
         status: invitation.status,
         id: invitation.id
