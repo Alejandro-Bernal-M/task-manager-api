@@ -48,6 +48,6 @@ class Api::V1::TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :description, :status, :author_id, :order)
+      params.require(:task).permit(:title, :description, :status, :author_id, :order, :subgroup_id)
     end
 end

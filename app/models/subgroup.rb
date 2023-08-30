@@ -4,6 +4,7 @@ class Subgroup < ApplicationRecord
   has_many :usergroups, dependent: :destroy
   has_many :users, through: :usergroups, source: :user
   has_many :invitations, dependent: :destroy
+  has_many :tasks, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 50 }
   validates :group_id, presence: true
