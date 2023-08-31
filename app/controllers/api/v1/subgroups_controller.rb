@@ -10,7 +10,7 @@ class Api::V1::SubgroupsController < ApplicationController
   
   # GET /api/v1/:user_id/groups/:group_id/subgroups/1
   def show
-    render json: @subgroup
+    render json: {data:{subgroup: @subgroup, users: @subgroup.users.map{ |user| {id: user.id ,email: user.email, name: user.name} }}}
   end
 
   # POST /api/v1/:user_id/groups/:group_id/subgroups
