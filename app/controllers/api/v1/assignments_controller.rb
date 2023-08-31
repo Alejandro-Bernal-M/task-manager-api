@@ -17,7 +17,7 @@ class Api::V1::AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(assignment_params)
     if Assignment.exists?(user_id: @assignment.user_id, task_id: @assignment.task_id)
-      render json: {status: 'ERROR', message: 'Assingation alredy exists'}, status: :unprocessable_entity
+      render json: {status: 'ERROR', message: 'Assignation alredy exists'}, status: :unprocessable_entity
     elsif @assignment.save
       render json: {data: @assignment, status: 'SUCCESS', message: 'User assigned'}, status: :created
     else
@@ -36,8 +36,11 @@ class Api::V1::AssignmentsController < ApplicationController
 
   # DELETE /api/v1/users/:user_id/tasks/:task_id/assignments/:id
   def destroy
-    @assignment.destroy
-    head :no_content
+   if @assignment.destroy
+    render json: {status: 'SUCCESS', message: 'Assignation deleted'}
+   else 
+    render json: {status: 'ERROR', message: 'Assignation not deleted'}
+   end
   end
 
   private
