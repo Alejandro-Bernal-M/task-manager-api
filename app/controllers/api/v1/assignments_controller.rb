@@ -16,9 +16,10 @@ class Api::V1::AssignmentsController < ApplicationController
   # POST /api/v1/users/:user_id/tasks/:task_id/assignments
   def create
     @assignment = Assignment.new(assignment_params)
-
-    if @assignment.save
-      render json: @assignment, status: :created
+    if Assignment.exists?(user_id: @assignment.user_id, task_id: @assignment.task_id)
+      render json: {status: 'ERROR', message: 'Assingation alredy exists'}, status: :unprocessable_entity
+    elsif @assignment.save
+      render json: {data: @assignment, status: 'SUCCESS', message: 'User assigned'}, status: :created
     else
       render json: @assignment.errors, status: :unprocessable_entity
     end
