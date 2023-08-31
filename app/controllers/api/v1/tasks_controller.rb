@@ -3,9 +3,19 @@ class Api::V1::TasksController < ApplicationController
 
   # GET /api/v1/users/:user_id/tasks
   def index
-    @tasks = Task.where(author_id: params[:user_id]).order(:order)
+    @tasks = Task.includes(:assignments).where(author_id: params[:user_id]).order(:order)
+    @tasks_organized = @tasks.map{|task| {
+      description: task.description,
+      id: task.id,
+      order: task.order,
+      status: task.status,
+      subgroup_id: task.subgroup_id,
+      title: task.title,
+      author_id: task.author_id,
+      assigneds: task.assignments
+    }}
 
-    render json: @tasks
+    render json: @tasks_organized
   end
 
   # GET /api/v1/users/:user_id/tasks/:id
