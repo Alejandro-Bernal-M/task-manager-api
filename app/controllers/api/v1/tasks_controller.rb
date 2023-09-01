@@ -13,9 +13,25 @@ class Api::V1::TasksController < ApplicationController
       title: task.title,
       author_id: task.author_id,
       assigneds: task.assignments
-    }}
+      }}
+      
+      @assignments = Assignment.where(user_id: params[:user_id])
+      @assigned_tasks = []
+      @assignments.each { |assignment| @assigned_tasks.push(Task.find(assignment.task_id))}
+  
+      @assigned_tasks_organized = @assigned_tasks.map{|task| {
+        description: task.description,
+        id: task.id,
+        order: task.order,
+        status: task.status,
+        subgroup_id: task.subgroup_id,
+        title: task.title,
+        author_id: task.author_id,
+        assigneds: task.assignments
+        }}
 
-    render json: @tasks_organized
+
+    render json: {authored: @tasks_organized, assigned: @assigned_tasks_organized}
   end
 
   # GET /api/v1/users/:user_id/tasks/:id
