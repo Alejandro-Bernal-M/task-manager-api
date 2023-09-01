@@ -18,7 +18,7 @@ class Api::V1::TasksController < ApplicationController
       @assignments = Assignment.where(user_id: params[:user_id])
       @assigned_tasks = []
       @assignments.each { |assignment| @assigned_tasks.push(Task.find(assignment.task_id))}
-  
+      
       @assigned_tasks_organized = @assigned_tasks.map{|task| {
         description: task.description,
         id: task.id,
@@ -31,7 +31,7 @@ class Api::V1::TasksController < ApplicationController
         }}
 
 
-    render json: {authored: @tasks_organized, assigned: @assigned_tasks_organized}
+    render json: {authored: @tasks_organized, assigned: @assigned_tasks_organized.sort_by {|task| task[:order] }}
   end
 
   # GET /api/v1/users/:user_id/tasks/:id
