@@ -1,10 +1,11 @@
 class Api::V1::UsergroupsController < ApplicationController
-  before_action :set_usergroup, only: [:show, :update, :destroy]
+  before_action :set_assignment, only: [:show, :update, :destroy]
 
   # GET /api/v1/users/:user_id/usergroups
   def index
     @usergroups = Usergroup.where(user_id: params[:user_id])
-    @subgroups = @usergroups.map { |usergroup| Subgroup.find(usergroup.subgroup_id) }
+    @data = @usergroups.map { |usergroup| {subgroup: Subgroup.find(usergroup.subgroup_id), assignation_id: usergroup.id} }
+    @subgroups =  @data
 
     render json: {data: @subgroups, status: 'SUCCESS'}
   end
@@ -40,8 +41,11 @@ class Api::V1::UsergroupsController < ApplicationController
 
   # DELETE /api/v1/users/:user_id/usergroups/:id
   def destroy
-    @usergroup.destroy
-
+    if @usergroup.destroy
+      render json: {message: 'Assignation deleted', status: 'SUCCESS'}
+    else 
+      render json: {message: 'Something went wrong', status: 'ERROR'}
+    end
   end
 
   private
