@@ -54,7 +54,16 @@ class Api::V1::TasksController < ApplicationController
   # PATCH/PUT /api/v1/tasks/1
   def update
     if @task.update(task_params)
-      render json: @task
+      render json: {
+        description: @task.description,
+        id: @task.id,
+        order: @task.order,
+        status: @task.status,
+        subgroup_id: @task.subgroup_id,
+        title: @task.title,
+        author_id: @task.author_id,
+        assigneds: @task.assignments
+        }
     else
       render json: @task.errors, status: :unprocessable_entity
     end
